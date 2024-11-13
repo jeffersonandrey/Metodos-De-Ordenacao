@@ -1,0 +1,707 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+void Apresentacao(){
+
+    printf("+---------------------------------------------+\n");
+    printf("| Jefferson Andrey Dias Cardoso - RA:24017498 |\n");
+    printf("|                                             |\n");
+    printf("| Flavio Silva Teles Junior - RA:24796047     |\n");
+    printf("|                                             |\n");
+    printf("| Kauã Kouqui Uemura Zauli - RA:24027746      |\n");
+    printf("|                                             |\n");
+    printf("|                                             |\n");
+    printf("|          Programa para manipular e          |\n");
+    printf("|               ordenar vetores!!             |\n");
+    printf("+---------------------------------------------+\n");
+
+}
+
+void Opcoes(){
+    printf("\n+----------------------------------+\n");
+    printf("|        Escolha sua opção:        |\n");
+    printf("|                                  |\n");
+    printf("| Opção 1: SelectionSort           |\n");
+    printf("| Opção 2: BubbleSort              |\n");
+    printf("| Opção 3: InsertionSort           |\n");
+    printf("| Opção 4: MergeSort               |\n");
+    printf("| Opção 5: QuickSort               |\n");
+    printf("| Opção 6: HeapSort                |\n");
+    printf("| Opção 7: Sair do Programa        |\n");
+    printf("|                                  |\n");
+    printf("+----------------------------------+\n");
+}
+
+void trocar(int *a, int *b){
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+    
+}
+
+void ImprimirVetor(int vetor[], int capacidade){
+    printf("\n");
+    for(int i = 0; i < capacidade; i ++){
+        printf("%d", vetor[i]);
+        if(i < capacidade - 1){
+            printf(", ");
+        }
+    }
+}
+
+void GerarVetor(int vetor[], int capacidade){
+    
+    int elemento_vetor;
+    
+    printf("Até qual número de elementos?\n1) 100\n2) 1000\n3) 10000\n4) 50000\n5) 100000\n");
+    printf("\nR: ");
+    scanf("%d", &elemento_vetor);
+    while(1){
+        if(capacidade > 100){
+            if(elemento_vetor == 1){
+                printf("Tamanho não correspondido\n");
+                printf("Redigitar...");
+                printf("\n\n");
+                printf("Até qual número de elementos?\n1) 100\n2) 1000\n3) 10000\n4) 50000\n5) 100000\n");
+                printf("\nR: ");
+                scanf("%d", &elemento_vetor);
+            }
+        }
+        if(capacidade > 1000){
+            if(elemento_vetor == 1 || elemento_vetor == 2){
+                printf("Tamanho não correspondido\n");
+                printf("Redigitar...");
+                printf("\n");
+                printf("Até qual número de elementos?\n1) 100\n2) 1000\n3) 10000\n4) 50000\n5) 100000\n");
+                printf("\nR: ");
+                scanf("%d", &elemento_vetor);
+            }
+        }
+        if(capacidade > 10000){
+            if(elemento_vetor == 3 || elemento_vetor == 2 || elemento_vetor == 1){
+                printf("Tamanho não correspondido\n");
+                printf("Redigitar...");
+                printf("\n\n");
+                printf("Até qual número de elementos?\n1) 100\n2) 1000\n3) 10000\n4) 50000\n5) 100000\n");
+                printf("\nR: ");
+                scanf("%d", &elemento_vetor);
+            }
+        }
+        if(capacidade > 50000){
+            if(elemento_vetor == 4 || elemento_vetor == 3 || elemento_vetor == 2 || elemento_vetor == 1){
+                printf("Tamanho não correspondido\n");
+                printf("Redigitar...");
+                printf("\n\n");
+                printf("Até qual número de elementos?\n1) 100\n2) 1000\n3) 10000\n4) 50000\n5) 100000\n");
+                printf("\nR: ");
+                scanf("%d", &elemento_vetor);
+            }
+        }
+        if(capacidade > 100000){
+            if(elemento_vetor == 5 || elemento_vetor == 4 || elemento_vetor == 3 || elemento_vetor == 2 || elemento_vetor == 1){
+                printf("Tamanho não correspondido\n");
+                printf("Redigitar...");
+                printf("\n\n");
+                printf("Até qual número de elementos?\n1) 100\n2) 1000\n3) 10000\n4) 50000\n5) 100000\n");
+                printf("\nR: ");
+                scanf("%d", &elemento_vetor);
+            }
+        }
+        if (elemento_vetor == 1 ){
+            
+            elemento_vetor = 100;
+            printf("Ok, Opção 1 escolhida...");
+            printf("\n");
+            break;
+        }
+        else if (elemento_vetor == 2){
+            
+            elemento_vetor = 1000;
+            printf("Ok, Opção 2 escolhida...");
+            printf("\n");
+            break;
+        }
+        else if (elemento_vetor == 3){
+            
+            elemento_vetor = 10000;
+            printf("Ok, Opção 3 escolhida...");
+            printf("\n");
+            break;
+        }
+        else if (elemento_vetor == 4){
+            
+            elemento_vetor = 50000;
+            printf("Ok, Opção 4 escolhida...");
+            printf("\n");
+            break;
+        }
+        else if (elemento_vetor == 5){
+            
+            elemento_vetor = 100000;
+            printf("Ok, Opção 5 escolhida...");
+            printf("\n");
+            break;
+        }
+        else if (elemento_vetor <= 0 || elemento_vetor > 5){
+            printf("Opção invalida");
+            printf("Tamanho não correspondido\n");
+            printf("Redigitar...");
+            printf("\n\n");
+            printf("Até qual número de elementos?\n1) 100\n2) 1000\n3) 10000\n4) 50000\n5) 100000\n");
+            printf("\nR: ");
+            scanf("%d", &elemento_vetor);
+        }
+    }    
+    
+    int numeros[elemento_vetor]; 
+    for (int i = 0; i < elemento_vetor; i++) {
+        numeros[i] = i;
+    }
+    
+   
+    for (int i = 0; i < elemento_vetor; i++) {
+        int j = rand() % elemento_vetor; 
+        int temp = numeros[i];
+        numeros[i] = numeros[j];
+        numeros[j] = temp;
+    }
+    
+    for (int i = 0; i < capacidade; i++) {
+        vetor[i] = numeros[i];
+    }   
+    
+    printf("\nVetor gerado!!: ");
+}
+
+//Primeiro Algoritimo!!
+
+int SelectionSort(int vetor[], int capacidade){
+    
+    for(int p = 0; p < capacidade - 1; p ++){
+        int menor = p;
+        for(int i = p + 1; i < capacidade; i ++){
+            if (vetor[i] < vetor[menor]){
+                menor = i;
+            }
+        }
+        trocar(&vetor[p], &vetor[menor]);
+    }
+
+}
+
+//Segundo Algoritimo!!
+
+int BubbleSort(int vetor[], int capacidade){
+    
+    for(int i = 0; i < capacidade - 1; i++){
+        for(int z = 0; z < capacidade - i - 1; z++){
+            if (vetor[z] > vetor[z + 1]){
+                trocar(&vetor[z], &vetor[z + 1]);
+            }
+        }
+    }
+}
+
+//Terceiro Algoritimo!!
+
+int InsertionSort(int vetor[], int capacidade){
+    
+    for (int i = 1; i < capacidade; i ++){
+        int chave = vetor[i];
+        int j = i - 1;
+        
+        while (j >= 0 && vetor[j] > chave){
+            vetor[j + 1] = vetor[j];
+            j --;
+        }
+        vetor[j + 1] = chave;
+    }
+    
+}
+
+//Quarto Algoritimo!!
+void Merge(int vetor[], int inicio, int meio, int fim) {
+    int i, j, k;
+    int n1 = meio - inicio + 1;
+    int n2 = fim - meio;
+
+    int *L = malloc(n1 * sizeof(int));
+    int *R = malloc(n2 * sizeof(int));
+
+    for (i = 0; i < n1; i++)
+        L[i] = vetor[inicio + i];
+    for (j = 0; j < n2; j++)
+        R[j] = vetor[meio + 1 + j];
+
+    i = 0; 
+    j = 0; 
+    k = inicio; 
+
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            vetor[k] = L[i];
+            i++;
+        } else {
+            vetor[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+
+    while (i < n1) {
+        vetor[k] = L[i];
+        i++;
+        k++;
+    }
+
+    while (j < n2) {
+        vetor[k] = R[j];
+        j++;
+        k++;
+    }
+
+    free(L);
+    free(R);
+}
+
+
+
+void MergeSort(int vetor[], int inicio, int fim) {
+    if (inicio < fim) {
+        int meio = inicio + (fim - inicio) / 2;
+
+        MergeSort(vetor, inicio, meio);
+        MergeSort(vetor, meio + 1, fim);
+        Merge(vetor, inicio, meio, fim);
+    }
+}
+
+
+//Quinto Algoritimo!!
+int Particionamento(int vetor[], int inicio, int fim){
+    int pivo = vetor[fim];
+    int i = inicio -1;
+    for(int p = inicio; p < fim; p ++){
+        if(vetor[p] <= pivo){
+            i ++; 
+            trocar(&vetor[i], &vetor[p]);
+        }
+    }
+    trocar(&vetor[i + 1], &vetor[fim]);
+    
+    return i + 1;
+}
+
+
+int QuickSort(int vetor[], int inicio, int fim){
+    
+    if(inicio < fim){
+        
+        int pivoIndex = Particionamento(vetor, inicio, fim);
+        
+        QuickSort(vetor, inicio, pivoIndex - 1);
+        QuickSort(vetor, pivoIndex + 1, fim);
+    }
+}
+
+//Sexto Algoritimo!!
+void Heapify(int vetor[], int n, int i){
+    int maior = i;
+    int esquerda = 2 * i + 1;
+    int direita = 2 * i + 2;
+
+    if (esquerda < n && vetor[esquerda] > vetor[maior]) {
+        maior = esquerda;
+    }
+    if (direita < n && vetor[direita] > vetor[maior]) {
+        maior = direita;
+    }
+    if (maior != i) {
+        trocar(&vetor[i], &vetor[maior]);
+        Heapify(vetor, n, maior);
+    }
+}
+
+
+void HeapSort(int vetor[], int capacidade){
+
+    // Construir o heap
+    for (int i = capacidade / 2 - 1; i >= 0; i--) {
+        Heapify(vetor, capacidade, i);
+    }
+
+    // Ordenar o vetor
+    for (int i = capacidade - 1; i > 0; i--) {
+        trocar(&vetor[0], &vetor[i]);
+        Heapify(vetor, i, 0);
+    }
+
+}
+    
+int main (void){
+    
+    Apresentacao();
+
+    srand(time(NULL));
+    int capacidade;
+
+    while(1){
+        
+        Opcoes();
+        
+        int opcao;
+        printf("Digite a opção desejada: ");
+        scanf("%d", &opcao);
+        printf("\n");
+        
+        if(opcao == 7) break;
+        
+        else if(opcao > 7 || opcao <= 0){
+            printf("Opção invalida, digite novamento...");
+            continue;
+        }
+        
+        printf("Digite a capacidade do vetor: ");
+        scanf("%d", &capacidade);
+        printf("\n");
+        int vetor [capacidade];
+        while (capacidade <= 0 || capacidade > 100000){
+            
+            printf("Tamanho insuficiente\n");
+            printf("Vetor deve ter entre 1 a 100.000 de capacidade.\n");
+            printf("Digite novamente a capacidade do vetor: ");
+            scanf("%d", &capacidade);
+            int vetor[capacidade];
+            
+            if (capacidade > 0 || capacidade < 100001){
+                
+                printf("Otimo agora sim!!");
+                printf("\n");
+                printf("\n");
+                break;
+                
+            }
+            
+        }
+  
+        if (opcao == 1){
+            
+            //Função de SelectionSort:
+            
+            while(1){
+                
+                GerarVetor(vetor, capacidade);
+                ImprimirVetor(vetor, capacidade);
+                
+                SelectionSort(vetor, capacidade);
+                printf("\n");
+                printf("\nVetor ordenado!!: ");
+                ImprimirVetor(vetor, capacidade);
+                
+                printf("\n\nCalculando a velocidade de execução...\n");
+                clock_t inicio, fim;
+                double tempoTotal;
+                
+                inicio = clock();
+                
+                SelectionSort(vetor, capacidade);
+                
+                fim = clock();
+                
+                tempoTotal = ((double) (fim - inicio)) / CLOCKS_PER_SEC;
+                
+                printf("\nO teste da velocidade de execução da função 'SelectionSort' foi equivalente a: %fp/s aproximadamente", tempoTotal);
+                
+                printf("\n\n");
+                printf("+---------------------------------+\n");
+                printf("|        1- Testar novamente      |\n");
+                printf("|        2- Voltar                |\n");
+                printf("+---------------------------------+\n");
+                printf("\n");
+                int opcao1;
+                printf("Opção:");
+                scanf("%d", &opcao1);
+                
+                if(opcao1 == 1){
+                    continue;
+                }else if (opcao1 == 2){
+                    printf("Voltando...");
+                    break;
+                }else{
+                    printf("\nOpção invaalida");
+                }
+            }
+            
+            
+        }else if (opcao == 2){
+            
+            //Função de BubbleSort:
+            
+            while(1){
+                
+                GerarVetor(vetor, capacidade);
+                ImprimirVetor(vetor, capacidade);
+                
+                BubbleSort(vetor, capacidade);
+                printf("\n\n");
+                printf("Vetor ordenado!!: ");
+                ImprimirVetor(vetor, capacidade);
+                
+                printf("\n\nCalculando a velocidade de execução...\n");
+                clock_t inicio, fim;
+                double tempoTotal;
+                
+                inicio = clock();
+                
+                BubbleSort(vetor, capacidade);
+                
+                fim = clock();
+                
+                tempoTotal = ((double) (fim - inicio)) / CLOCKS_PER_SEC;
+                
+                printf("\nO teste da velocidade de execução da função 'BubbleSort' foi equivalente a: %fp/s aproximadamente", tempoTotal);
+                
+                
+                printf("\n\n");
+                printf("+---------------------------------+\n");
+                printf("|        1- Testar novamente      |\n");
+                printf("|        2- Voltar                |\n");
+                printf("+---------------------------------+\n");
+                printf("\n");
+                int opcao2;
+                printf("Opção:");
+                scanf("%d", &opcao2);
+                
+                if(opcao2 == 1){
+                    continue;
+                }else if (opcao2 == 2){
+                    printf("Voltando...");
+                    break;
+                }else{
+                    printf("\nOpção invalida");
+                }
+            }
+            
+            
+        }else if(opcao == 3){
+            
+            //Função de InsertionSort:
+            
+            while(1){
+                
+                GerarVetor(vetor, capacidade);
+                
+                ImprimirVetor(vetor, capacidade);
+                
+                printf("\n");
+                printf("\n");
+                
+                InsertionSort(vetor, capacidade);
+                
+                printf("Vetor ordenado: ");
+                ImprimirVetor(vetor, capacidade);
+                
+                printf("\n\nCalculando a velocidade de execução...\n");
+                clock_t inicio, fim;
+                double tempoTotal;
+                
+                inicio = clock();
+                
+                InsertionSort(vetor, capacidade);
+                
+                fim = clock();
+                
+                tempoTotal = ((double) (fim - inicio)) / CLOCKS_PER_SEC;
+                
+                printf("\nO teste da velocidade de execução da função 'InsertionSort' foi equivalente a: %fp/s aproximadamente", tempoTotal);
+                
+                
+                printf("\n\n");
+                    printf("+-----------------------------------+\n");
+                    printf("|        1- Arrumar outro elemento  |\n");
+                    printf("|        2- Voltar                  |\n");
+                    printf("+-----------------------------------+\n");
+                    printf("\n");
+                    int opcao3;
+                    printf("Opção:");
+                    scanf("%d", &opcao3);
+                    
+                    if(opcao3 == 1){
+                        continue;
+                    }else if (opcao3 == 2){
+                        printf("Voltando...");
+                        break;
+                    }else{
+                        printf("\nOpção invalida");
+                    }
+            }
+            
+            
+        }else if (opcao == 4){
+            
+            //Função de MergeSort:
+            
+            while(1){
+                
+                GerarVetor(vetor, capacidade);
+                ImprimirVetor(vetor, capacidade);
+                
+                MergeSort(vetor, 0, capacidade - 1);
+                printf("\n\n");
+                printf("Vetor ordenado!!: ");
+                ImprimirVetor(vetor, capacidade);
+                
+                printf("\n\nCalculando a velocidade de execução...\n");
+                clock_t inicio, fim;
+                double tempoTotal;
+                
+                inicio = clock();
+                
+                MergeSort(vetor, 0, capacidade - 1);
+                
+                fim = clock();
+                
+                tempoTotal = ((double) (fim - inicio)) / CLOCKS_PER_SEC;
+                
+                printf("\nO teste da velocidade de execução da função 'MergeSort' foi equivalente a: %fp/s aproximadamente", tempoTotal);
+                
+                
+                printf("\n\n");
+                    printf("+-----------------------------------+\n");
+                    printf("|        1- Testar novamente        |\n");
+                    printf("|        2- Voltar                  |\n");
+                    printf("+-----------------------------------+\n");
+                    printf("\n");
+                    int opcao4;
+                    printf("Opção:");
+                    scanf("%d", &opcao4);
+                    
+                    if(opcao4 == 1){
+                        continue;
+                    }else if (opcao4 == 2){
+                        printf("Voltando...");
+                        break;
+                    }else{
+                        printf("\nOpção invalida");
+                    }
+            }
+        
+        
+        }else if (opcao == 5){
+            
+            //Função de QuickSort:
+            
+            while(1){
+                
+                GerarVetor(vetor, capacidade);
+                ImprimirVetor(vetor, capacidade);
+                
+                QuickSort(vetor, 0, capacidade - 1);
+                printf("\n\n");
+                printf("Vetor ordenado!!: ");
+                ImprimirVetor(vetor, capacidade);
+                
+                printf("\n\nCalculando a velocidade de execução...\n");
+                clock_t inicio, fim;
+                double tempoTotal;
+                
+                inicio = clock();
+                
+                QuickSort(vetor, 0, capacidade - 1);
+                
+                fim = clock();
+                
+                tempoTotal = ((double) (fim - inicio)) / CLOCKS_PER_SEC;
+                
+                printf("\nO teste da velocidade de execução da função 'QuickSort' foi equivalente a: %fp/s aproximadamente", tempoTotal);
+                
+                
+                printf("\n\n");
+                printf("+---------------------------------+\n");
+                printf("|        1- Testar novamente      |\n");
+                printf("|        2- Voltar                |\n");
+                printf("+---------------------------------+\n");
+                printf("\n");
+                int opcao5;
+                printf("Opção:");
+                scanf("%d", &opcao5);
+                
+                if(opcao5 == 1){
+                    continue;
+                }else if (opcao5 == 2){
+                    printf("Voltando...");
+                    break;
+                }else{
+                    printf("\nOpção invalida");
+                }
+                
+            }
+            
+            
+        }else if (opcao == 6){
+            
+            //Função de HeapSort:
+            
+            while(1){
+                
+                GerarVetor(vetor, capacidade);
+                ImprimirVetor(vetor, capacidade);
+                
+                HeapSort(vetor, capacidade);
+                printf("\n\n");
+                printf("Vetor ordenado!!: ");
+                ImprimirVetor(vetor, capacidade);
+                
+                printf("\n\nCalculando a velocidade de execução...\n");
+                clock_t inicio, fim;
+                double tempoTotal;
+                
+                inicio = clock();
+                
+                HeapSort(vetor, capacidade);
+                
+                fim = clock();
+                
+                tempoTotal = ((double) (fim - inicio)) / CLOCKS_PER_SEC;
+                
+                printf("\nO teste da velocidade de execução da função 'HeapSort' foi equivalente a: %fp/s aproximadamente", tempoTotal);
+                
+                
+                printf("\n\n");
+                printf("+---------------------------------+\n");
+                printf("|        1- Testar novamente      |\n");
+                printf("|        2- Voltar                |\n");
+                printf("+---------------------------------+\n");
+                printf("\n");
+                int opcao6;
+                printf("Opção:");
+                scanf("%d", &opcao6);
+                
+                if(opcao6 == 1){
+                    continue;
+                }else if (opcao6 == 2){
+                    printf("Voltando...");
+                    break;
+                }else{
+                    printf("\nOpção invalida");
+                }
+            }
+        
+        
+        }else if (opcao == 7){
+            printf("Saindo...");
+            break;
+            
+            
+        }else{
+            printf("Opção não disponivel...");
+        }
+        
+
+    }
+    printf("\n");
+    printf("Obrigado por usar :)");
+   
+    return 0;
+}
