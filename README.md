@@ -1,1 +1,1 @@
-Breve trabalho sobre métodos de ordenação de listas em C
+Breve trabalho sobre métodos de ordenação de vetores em C
